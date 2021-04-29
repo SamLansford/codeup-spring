@@ -42,4 +42,10 @@ public class HelloController {
         return "join";
     }
 
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
+
+
 }
