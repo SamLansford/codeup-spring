@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.models.Post;
+import com.example.demo.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,34 +13,66 @@ import java.util.List;
 @Controller
 public class PostController {
 
-    @RequestMapping(path = "/post", method = RequestMethod.GET)
-    public String post(Model vModel) {
-        List<Post> posts = new ArrayList<>(Arrays.asList(
-                new Post("Post Title 1", "something 1"),
-                new Post("Post Title 2", "something 2"),
-                new Post("Post Title 3", "something 3")
-        ));
-        vModel.addAttribute("posts", posts);
+    private final PostRepository postsDao;
+
+    public PostController(PostRepository postsDao) {
+        this.postsDao = postsDao;
+    }
+
+    @GetMapping("/posts")
+    public String index(Model vModel) {
+        vModel.addAttribute("posts", postsDao.findAll());
         return "posts/index";
     }
 
-    @RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
-    public String postsID(@PathVariable Long id, Model vModel) {
-        Post post = new Post("test Title", "Test Body");
-        vModel.addAttribute("id",id);
+    @GetMapping("/posts/{id}")
+    public String show(@PathVariable long id, Model vModel) {
+        Post post = new Post("Test Title", "Test Body");
+        vModel.addAttribute("id", id);
         vModel.addAttribute("post", post);
         return "posts/show";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-    @ResponseBody
-    public String postsCreate() {
-        return "view the form for creating a post";
+    @GetMapping("/posts/{id}/edit")
+    public String edit(@PathVariable long id, Model vModel) {
+        Post postToEdit = postsDao.getOne(id);
+        vModel.addAttribute("post", postToEdit);
+        return "posts/edit";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    @ResponseBody
-    public String postingCreate() {
-        return "create a new post";
+    @PostMapping("/posts/{id}/edit")
+    public String update(
+            @PathVariable long id,
+            @RequestParam String title,
+            @RequestParam String body) {
+
+        Post postToUpdate = new Post(
+                id,
+                title,
+                body
+        );
+
+        postsDao.save(postToUpdate);
+
+        return "redirect:/posts";
     }
+
+    @PostMapping("/posts/{id}/delete")
+    public String delete(@PathVariable long id) {
+        postsDao.deleteById(id);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/create")
+    @ResponseBody
+    public String create() {
+        return "Here is a view to create a new post...";
+    }
+
+    @PostMapping("/posts/create")
+    @ResponseBody
+    public String insert() {
+        return "Saving a new post...";
+    }
+
 }
