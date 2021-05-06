@@ -17,7 +17,16 @@ public class Post {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String body;
 
+    @ManyToOne
+    private User user;
+
     public Post() {
+    }
+
+    public Post(String title, String body, User user) {
+        this.title = title;
+        this.body = body;
+        this.user = user;
     }
 
     public Post(String title, String body) {
@@ -53,5 +62,13 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

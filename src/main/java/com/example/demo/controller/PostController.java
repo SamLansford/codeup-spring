@@ -1,22 +1,22 @@
 package com.example.demo.controller;
 
 import com.example.demo.models.Post;
-import com.example.demo.repositories.PostRepository;
+import com.example.demo.models.User;
+import com.example.demo.repositories.PostRepo;
+import com.example.demo.repositories.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @Controller
 public class PostController {
 
-    private final PostRepository postsDao;
+    private final PostRepo postsDao;
+    private final UserRepo usersDao;
 
-    public PostController(PostRepository postsDao) {
+    public PostController(PostRepo postsDao, UserRepo usersDao) {
         this.postsDao = postsDao;
+        this.usersDao = usersDao;
     }
 
     @GetMapping("/posts")
@@ -27,9 +27,7 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String show(@PathVariable long id, Model vModel) {
-        Post post = new Post("Test Title", "Test Body");
-        vModel.addAttribute("id", id);
-        vModel.addAttribute("post", post);
+        vModel.addAttribute("post", postsDao.getOne(id));
         return "posts/show";
     }
 
@@ -64,15 +62,19 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
     public String create() {
-        return "Here is a view to create a new post...";
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String insert() {
-        return "Saving a new post...";
+    public String insert(@RequestParam String title, @RequestParam String body) {
+        User author = usersDao.getOne(1L);
+        Post post = postsDao.save(new Post(
+                title,
+                body,
+                author
+        ));
+        return "redirect:/posts/" + post.getId();
     }
 
 }
