@@ -1,8 +1,10 @@
 package com.example.demo.models;
 
+import com.example.demo.repositories.AdCategoryRepo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ads")

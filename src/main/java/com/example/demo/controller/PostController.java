@@ -71,8 +71,7 @@ public class PostController {
         User author = usersDao.getOne(1L);
         Post post = postsDao.save(new Post(
                 title,
-                body,
-                author
+                body
         ));
         return "redirect:/posts/" + post.getId();
     }

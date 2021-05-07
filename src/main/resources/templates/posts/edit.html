@@ -10,8 +10,9 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 <header th:replace="partials/header :: header('Edit Post')"></header>
 
+<!-- use thymeleaf to dynamically create the html for each post -->
 <main class="container">
-
+    <!-- th:action and th:method are required so that a hidden CSRF token input is included in the form when Spring Security is enabled -->
     <form th:action="'/posts/' + ${id} + '/edit'" th:method="POST">
         <label for="title">Title</label>
         <input id="title" type="text" name="title" th:value="${post.title}">

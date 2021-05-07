@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
@@ -9,15 +8,15 @@
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
     <div class="container">
-        <a class="navbar-brand" href="/roll-dice">Dice Roll</a>
+        <a class="navbar-brand" href="/">Codeup Posts</a>
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/post">Posts</a>
-                <a class="nav-link" href="/posts/${id}">Single Post</a>
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="/posts">Posts</a>
+                <a class="nav-link" href="/posts/create">Create Post</a>
+                <a class="nav-link" href="/about">About</a>
             </div>
         </div>
     </div>
