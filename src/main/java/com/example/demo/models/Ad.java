@@ -127,8 +127,6 @@ public class Ad {
         this.priceInCents = priceInCents;
     }
 
-    // getter and setter for the adDetails object
-
     public AdDetails getAdDetails() {
         return adDetails;
     }

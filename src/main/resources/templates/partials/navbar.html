@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -8,7 +8,7 @@
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
     <div class="container">
-        <a class="navbar-brand" href="/">Codeup Posts</a>
+        <a class="navbar-brand" href="/">Codeup Blog</a>
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,6 +17,8 @@
                 <a class="nav-link" href="/posts">Posts</a>
                 <a class="nav-link" href="/posts/create">Create Post</a>
                 <a class="nav-link" href="/about">About</a>
+                <a class="nav-link" id="logout-link" href="#">Logout</a>
+                <form id="logout-form" th:action="@{/logout}" th:method="post"></form>
             </div>
         </div>
     </div>

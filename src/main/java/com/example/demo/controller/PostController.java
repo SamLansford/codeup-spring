@@ -1,9 +1,19 @@
 package com.example.demo.controller;
 
+//import com.example.demo.models.Post;
+//import com.example.demo.models.User;
+//import com.example.demo.repositories.PostRepo;
+//import com.example.demo.repositories.UserRepo;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.repositories.PostRepo;
 import com.example.demo.repositories.UserRepo;
+//import com.example.demo.services.EmailSvc;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +23,12 @@ public class PostController {
 
     private final PostRepo postsDao;
     private final UserRepo usersDao;
+//    private final EmailSvc emailSvc;
 
-    public PostController(PostRepo postsDao, UserRepo usersDao) {
+    public PostController(PostRepo postsDao, UserRepo usersDao){ //EmailSvc emailSvc) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
+//        this.emailSvc = emailSvc;
     }
 
     @GetMapping("/posts")
@@ -39,19 +51,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String update(
-            @PathVariable long id,
-            @RequestParam String title,
-            @RequestParam String body) {
-
-        Post postToUpdate = new Post(
-                id,
-                title,
-                body
-        );
-
-        postsDao.save(postToUpdate);
-
+    public String update(@ModelAttribute Post post) {
+        postsDao.save(post);
         return "redirect:/posts";
     }
 
@@ -62,18 +63,19 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String create() {
+    public String create(Model vModel) {
+        vModel.addAttribute("post", new Post());
         return "posts/create";
     }
 
-    @PostMapping("/posts/create")
-    public String insert(@RequestParam String title, @RequestParam String body) {
-        User author = usersDao.getOne(1L);
-        Post post = postsDao.save(new Post(
-                title,
-                body
-        ));
-        return "redirect:/posts/" + post.getId();
-    }
+//    @PostMapping("/posts/create")
+//    public String insert(@ModelAttribute Post post) {
+//        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User author = usersDao.getOne(principal.getId());
+//        post.setUser(author);
+//        Post savedPost = postsDao.save(post);
+//        emailSvc.prepareAndSend(post, "Post Created!", "You have just created a post!");
+//        return "redirect:/posts/" + savedPost.getId();
+//    }
 
 }
