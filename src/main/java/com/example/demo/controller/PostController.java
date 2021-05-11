@@ -1,17 +1,11 @@
 package com.example.demo.controller;
 
-//import com.example.demo.models.Post;
-//import com.example.demo.models.User;
-//import com.example.demo.repositories.PostRepo;
-//import com.example.demo.repositories.UserRepo;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.repositories.PostRepo;
 import com.example.demo.repositories.UserRepo;
+//import com.example.demo.services.EmailSvc;
 //import com.example.demo.services.EmailSvc;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
