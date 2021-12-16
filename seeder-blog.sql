@@ -1,1 +1,2 @@
-use luna_blog_db;
+use
+luna_blog_db;

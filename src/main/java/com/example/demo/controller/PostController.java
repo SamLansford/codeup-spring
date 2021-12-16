@@ -5,7 +5,7 @@ import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.repositories.PostRepo;
 import com.example.demo.repositories.UserRepo;
-import com.example.demo.services.EmailSvc;
+//import com.example.demo.services.EmailSvc;
 //import com.example.demo.services.EmailSvc;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class PostController {
     private final UserRepo usersDao;
 //    private final EmailSvc emailSvc;
 
-    public PostController(PostRepo postsDao, UserRepo usersDao){ //EmailSvc emailSvc) {
+    public PostController(PostRepo postsDao, UserRepo usersDao) { //EmailSvc emailSvc) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
 //        this.emailSvc = emailSvc;

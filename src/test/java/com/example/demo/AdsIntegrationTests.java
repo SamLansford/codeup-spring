@@ -48,7 +48,7 @@ public class AdsIntegrationTests {
         testUser = userDao.findByUsername("testUser");
 
         // Creates the test user if not exists
-        if(testUser == null){
+        if (testUser == null) {
             User newUser = new User();
             newUser.setUsername("testUser");
             newUser.setPassword(passwordEncoder.encode("pass"));

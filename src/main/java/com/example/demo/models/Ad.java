@@ -19,7 +19,6 @@ public class Ad {
      * - the cascade allows us to CRUD images through ads
      * - the mappedBy prevents an unneeded mapping table to be created by Hibernate
      * - the orphanRemoval will automatically delete any images if they are removed from an ad
-     *
      * @JsonManagedReference prevents a circular reference that creates, avoiding an infinite loop of JSON
      * - put on the side without the foreign key
      */
@@ -51,8 +50,8 @@ public class Ad {
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(
             name = "ads_categories",
-            joinColumns = { @JoinColumn(name = "ad_id") },
-            inverseJoinColumns = { @JoinColumn(name = "category_id") }
+            joinColumns = {@JoinColumn(name = "ad_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
     @JsonManagedReference
     private List<AdCategory> adCategories;

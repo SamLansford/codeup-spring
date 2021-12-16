@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "dogs",
-    uniqueConstraints = @UniqueConstraint(name = "UK_name_AND_reside_state", columnNames = {"name", "residestate"})
+        uniqueConstraints = @UniqueConstraint(name = "UK_name_AND_reside_state", columnNames = {"name", "residestate"})
 )
 public class Dog {
 
