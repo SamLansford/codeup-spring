@@ -5,8 +5,7 @@ import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.repositories.PostRepo;
 import com.example.demo.repositories.UserRepo;
-//import com.example.demo.services.EmailSvc;
-//import com.example.demo.services.EmailSvc;
+import com.example.demo.services.EmailSvc;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +16,12 @@ public class PostController {
 
     private final PostRepo postsDao;
     private final UserRepo usersDao;
-//    private final EmailSvc emailSvc;
+    private final EmailSvc emailSvc;
 
-    public PostController(PostRepo postsDao, UserRepo usersDao) { //EmailSvc emailSvc) {
+    public PostController(PostRepo postsDao, UserRepo usersDao, EmailSvc emailSvc) { //EmailSvc emailSvc) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
-//        this.emailSvc = emailSvc;
+        this.emailSvc = emailSvc;
     }
 
     @GetMapping("/posts")
@@ -62,6 +61,20 @@ public class PostController {
         return "posts/create";
     }
 
+    @PostMapping("/posts/create")
+    public String createPost(@ModelAttribute Post post) {
+        post.setUser(usersDao.getId(1L));
+
+        String emailSubject = post.getUser().getUsername() + ", your post has been created!";
+        String emailBody = "Your post has been create Congratulations - your latest blog post is up and ready to view on your blogging website. Your post read: " + post.getBody();
+
+
+        emailSvc.prepareAndSend(post, emailSubject, emailBody);
+        postsDao.save(post);
+
+        return "redirect:/posts";
+    }
+
 //    @PostMapping("/posts/create")
 //    public String insert(@ModelAttribute Post post) {
 //        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -69,7 +82,7 @@ public class PostController {
 //        post.setUser(author);
 //        Post savedPost = postsDao.save(post);
 //        emailSvc.prepareAndSend(post, "Post Created!", "You have just created a post!");
-//        return "redirect:/posts/" + savedPost.getId();
+//        return "redirect:/posts" + savedPost.getId();
 //    }
 
 }
